@@ -57,7 +57,7 @@ const ReviewWrite = (props) => {
       bookId: myComments.bookId,
       id: myComments.id,
       comments: comments,
-      stars:rateStar,
+      stars: rateStar,
     }));
   }
 
@@ -78,9 +78,10 @@ const ReviewWrite = (props) => {
 
     if (searchUser.length === 0) {
       setIsEdit(false);
+      setComments("");
       return;
     }
-    
+
     if (is_login && (searchUser[0] === username)) {
       setIsEdit(true);
       setComments(myComments.comments);

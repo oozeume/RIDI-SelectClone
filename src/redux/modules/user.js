@@ -90,8 +90,8 @@ export default handleActions(
       draft.is_login = true;
     }),
     [LOG_OUT]: (state, action) => produce(state, (draft) => {
-      window.location.reload();
       cookies.remove("refresh_token");
+      window.location.reload();
       draft.user = null;
       draft.is_login = false;
     })
