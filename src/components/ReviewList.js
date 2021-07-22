@@ -14,18 +14,24 @@ const ReviewList = (props) => {
 
   useEffect(() => {
     dispatch(reviewActions.getReviewAPI(id));
-    dispatch(bookActions.getBookDetailAPI(id))
-  }, [isEdit]);
+    dispatch(bookActions.getBookDetailAPI(id));
+    console.log("------------리뷰리스트 확인", isEdit);
+  }, []);
 
-  return (
-    <ListWrapper>
-      {comment_list.map(c => {
-        return (
-          <ReviewItem key={c.id} {...c} cid={id} />
-        )
-      })}
-    </ListWrapper>
-  );
+
+  if (comment_list.length > 0) {
+    return (
+      <ListWrapper>
+        {comment_list.map(c => {
+          return (
+            <ReviewItem key={c.id} {...c} cid={id} />
+          )
+        })}
+      </ListWrapper>
+    );
+  } else {
+    return null;
+  }
 }
 
 export default ReviewList;

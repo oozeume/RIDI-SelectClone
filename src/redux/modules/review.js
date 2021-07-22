@@ -18,11 +18,11 @@ const GET_ISWRITTEN = "GET_ISWRITTEN"
 const addReview = createAction(ADD_REVIEW, (comments) => ({ comments }));
 const getReview = createAction(GET_REVIEW, (review) => ({ review }));
 const editReview = createAction(EDIT_REVIEW, (comments) => ({ comments }));
-const deleteReview = createAction(DELETE_REVIEW, (comments) => ({ comments }));
+const deleteReview = createAction(DELETE_REVIEW, (review) => ({ review }));
 const writeText = createAction(WRITE_TEXT, (text) => ({ text }));
 const like = createAction(LIKE, (commentId) => ({ commentId }));
 const getLike = createAction(GET_LIKE, (review) => ({ review }));
-const getIsWritten = createAction(GET_ISWRITTEN, (review)=>({ review }));
+const getIsWritten = createAction(GET_ISWRITTEN, (review) => ({ review }));
 
 // initailState
 const initailState = {
@@ -78,15 +78,21 @@ const editReviewAPI = (comments) => {
   return function (dispatch, getState, { history }) {
     const id = comments.id;
     const bookId = comments.bookId;
+    const rateStar = comments.rateStar;
+    const comment = comments.comments;
 
     api
-      .put(`/comment/${id}`, comments)
+      .put(`/comment/${id}`, {
+        comments: comment,
+        stars: rateStar
+      })
       .then((response) => {
         dispatch(editReview(response.data.comments));
         dispatch(getReviewAPI(bookId));
         console.log("리뷰 수정 성공");
       })
       .catch((error) => {
+        console.log("리뷰 수정 실패한 이유", id, bookId, rateStar, comment);
         console.log("리뷰 수정 실패", error);
       })
   }
@@ -151,7 +157,7 @@ const getLikeAPI = () => {
 
 const getIsWrittenAPI = (bookId) => {
   return function (dispatch, getState, { history }) {
-    console.log("------------북 아이디 체크",bookId)
+    console.log("------------북 아이디 체크", bookId)
 
     api
       .get(`/usercomment/${bookId}`)
@@ -186,7 +192,7 @@ export default handleActions(
       draft.comments = action.payload.comments;
     }),
     [DELETE_REVIEW]: (state, action) => produce(state, (draft) => {
-      draft.comments = action.payload.comments;
+      draft.review = action.payload.review;
     }),
     [GET_LIKE]: (state, action) => produce(state, (draft) => {
       draft.review = action.payload.review;
@@ -207,7 +213,7 @@ export default handleActions(
         };
       }
     }),
-    [GET_ISWRITTEN] : (state, action) =>produce(state, (draft) => {
+    [GET_ISWRITTEN]: (state, action) => produce(state, (draft) => {
       draft.user_comment_info = action.payload.review;
     })
   }, initailState

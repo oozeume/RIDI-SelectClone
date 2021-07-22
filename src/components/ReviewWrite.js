@@ -27,7 +27,6 @@ const ReviewWrite = (props) => {
 
   // 내가 쓴 리뷰만 가져오기
   const myComments = checkWrittenUser.comments
-  console.log("------마이 코멘트 확인", myComments)
   const [comments, setComments] = useState("");
 
   //별점메기기 
@@ -47,7 +46,7 @@ const ReviewWrite = (props) => {
       window.alert("로그인 후 작성 가능합니다.");
       return;
     }
-    if (rateStar == 0) {
+    if (rateStar === 0) {
       window.alert("별점을 작성해주세요.")
       return;
     }
@@ -60,9 +59,9 @@ const ReviewWrite = (props) => {
   //댓글 수정
   const editComment = () => {
     dispatch(reviewActions.editReviewAPI({
-      bookId: myComments.bookId,
-      id: myComments.id,
-      comments: comments,
+      bookId: checkWrittenUser.bookId,
+      id: checkWrittenUser.id,
+      comments: myComments,
       stars: rateStar,
     }));
   }
@@ -70,11 +69,11 @@ const ReviewWrite = (props) => {
   //댓글 삭제
   const deleteComment = () => {
     dispatch(reviewActions.deleteReviewAPI({
-      bookId: myComments.bookId,
-      id: myComments.id,
-      comments: comments,
+      id: checkWrittenUser.id,
+      bookId: checkWrittenUser.bookId,
     }));
     setComments("");
+    setIsEdit(false);
   }
 
   useEffect(() => {
@@ -94,7 +93,7 @@ const ReviewWrite = (props) => {
     return () => {
       setIsEdit(false);
     }
-  }, [checkWrittenUser]);
+  }, [reviewList]);
 
 
   if (isEdit) {
