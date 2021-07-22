@@ -41,7 +41,7 @@ const initialState = {
     star3Count: 0,
     star4Count: 0,
     star5Count: 0},
-    totalCount: 0}
+    totalCount: 0},
 }
 
 const loadBookAPI = (pageNumber = 1) => {
@@ -130,7 +130,7 @@ export default handleActions(
     }),
     [GET_STARINFO] : (state, action) => produce(state, (draft) => {
       draft.starInfo = action.payload.star_info
-    })
+    }),
   },
   initialState
 );

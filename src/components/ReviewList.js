@@ -9,8 +9,9 @@ import { actionCreators as bookActions } from "../redux/modules/book"
 const ReviewList = (props) => {
   const dispatch = useDispatch();
   const comment_list = useSelector((store) => store.review.review);
+  const isEdit = useSelector((store) => store.review.is_edit)
 
-  const { id, isEdit } = props;
+  const { id } = props;
 
   useEffect(() => {
     dispatch(reviewActions.getReviewAPI(id));

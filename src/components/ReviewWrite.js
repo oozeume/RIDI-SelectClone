@@ -15,25 +15,21 @@ import { actionCreators as reviewActions } from "../redux/modules/review";
 const ReviewWrite = (props) => {
   const dispatch = useDispatch();
 
-  const [isEdit, setIsEdit] = useState(false);
-  const { id } = props;
+  const is_edit = useSelector((store) => store.review.is_edit);
+  const { id } = props
 
   const is_login = useSelector((store) => store.user.is_login);
   const username = useSelector((store) => store.user.username);
-  const reviewList = useSelector((store) => store.review.review);
 
   const checkWrittenUser = useSelector((store) => store.review.user_comment_info)
   console.log(checkWrittenUser)
+  const rateStar = useSelector((state) => state.review.get_rated_star)
+  const writtenStar = useSelector(state => state.review.user_comment_info.stars)
 
   // 내가 쓴 리뷰만 가져오기
   const myComments = checkWrittenUser.comments
   const [comments, setComments] = useState("");
 
-  //별점메기기 
-  const [rateStar, setRateStar] = useState(0);
-  const getRateStar = (num) => {
-    setRateStar(num)
-  }
 
   // 리뷰작성확인
   const onChageReview = (e) => {
@@ -50,10 +46,10 @@ const ReviewWrite = (props) => {
       window.alert("별점을 작성해주세요.")
       return;
     }
+    console.log("------------리뷰를 작성합니다.")
     dispatch(reviewActions.addReviewAPI(comments, username, id, rateStar));
-    setComments(comments);
     dispatch(reviewActions.writeTextPage(comments));
-    setIsEdit(true);
+    dispatch(reviewActions.isEdit(true))
   }
 
   //댓글 수정
@@ -80,29 +76,36 @@ const ReviewWrite = (props) => {
     dispatch(reviewActions.getIsWrittenAPI(id))
 
     if (!checkWrittenUser) {
-      setIsEdit(false);
-      setComments("");
+      dispatch(reviewActions.isEdit(false))
+      dispatch(reviewActions.isEstimated(false))
       return;
     }
 
     if (checkWrittenUser) {
-      setIsEdit(true);
+      dispatch(reviewActions.isEdit(true))
+      dispatch(reviewActions.isEstimated(true))
+      dispatch(reviewActions.getRatedStar(writtenStar))
       setComments(myComments);
     }
 
     return () => {
-      setIsEdit(false);
+      dispatch(reviewActions.isEdit(false))
+      dispatch(reviewActions.isEstimated(false))
+      setComments("")
     }
-  }, [reviewList]);
+
+  }, [myComments]);
 
 
-  if (isEdit) {
+
+
+  if (is_edit) {
     return (
       <React.Fragment>
         <ReviewHeaderBox>
           <RatingSummary />
           <ReviewHeaderRight>
-            <RatingStar getRateStar={getRateStar} isEdit={isEdit} />
+            <RatingStar />
             <WriteWrapper>
               <Input
                 border="none"
@@ -126,7 +129,7 @@ const ReviewWrite = (props) => {
             </WriteWrapper>
           </ReviewHeaderRight>
         </ReviewHeaderBox>
-        <ReviewList id={id} isEdit={isEdit} />
+        <ReviewList id={id} />
       </React.Fragment>
     );
   } else {
@@ -135,7 +138,7 @@ const ReviewWrite = (props) => {
         <ReviewHeaderBox>
           <RatingSummary />
           <ReviewHeaderRight>
-            <RatingStar getRateStar={getRateStar} is_edit={isEdit} />
+            <RatingStar />
             <WriteWrapper>
               <Input
                 border="2px solid #d1d5d9"
@@ -157,7 +160,7 @@ const ReviewWrite = (props) => {
             </WriteWrapper>
           </ReviewHeaderRight>
         </ReviewHeaderBox>
-        <ReviewList id={id} isEdit={isEdit} />
+        <ReviewList id={id} />
       </React.Fragment>
     )
   }

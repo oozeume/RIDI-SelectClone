@@ -6,7 +6,7 @@ import HeaderLine from "../elements/HeaderLine"
 import Footer from "../components/Footer";
 
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as bookActions } from "../redux/modules/book"
+import book, { actionCreators as bookActions } from "../redux/modules/book"
 
 const BookDetail = (props) => {
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ const BookDetail = (props) => {
 
   useEffect(() => {
     dispatch(bookActions.getBookDetailAPI(book_id))
+
   }, [])
 
   return (
