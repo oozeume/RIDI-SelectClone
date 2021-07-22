@@ -25,12 +25,12 @@ const HeaderLine = (props) => {
         <MainHeader>
             <Header1>
               <LogoBox>
-                <LogoImg src={ridiSelectWhite} maxWidth="102px" maxHeight="16px" />
+                <LogoImg onClick={() => { history.push("/") }} src={ridiSelectWhite} maxWidth="102px" maxHeight="16px" />
                 <LogoImg src={ridiBooksWhite} maxWidth="90px" maxHeight="13px" />
               </LogoBox>
               <LoginAndSearchBox>
                 {is_login ? <Login color={"hsla(0,0%,100%,.5)"} border={"hsla(0,0%,100%,.5)"} onClick={logOut}>로그아웃</Login>
-                  : <Login onClick={() => { history.push("/login") }}>로그인</Login>
+                  : <Login color={"hsla(0,0%,100%,.5)"} border={"hsla(0,0%,100%,.5)"} onClick={() => { history.push("/login") }}>로그인</Login>
                 }
               </LoginAndSearchBox>
             </Header1>
