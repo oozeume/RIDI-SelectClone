@@ -1,7 +1,7 @@
 # Ridi Select CloneCoding📘
 
 리디북스 리디셀렉트의 카테고리 페이지를 클론코딩하였습니다.  
-http://ridiclone.shop/
+http://ridiclone.shop/ (현재닫힘)
 
 <br>
 
