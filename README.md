@@ -37,18 +37,21 @@ http://ridiclone.shop/ (현재닫힘)
 
 ## 🖥 3. 실행화면
 
-<img src="https://ifh.cc/g/nItMMZ.gif">
+<br/>
 
-자세한 영상 : https://www.youtube.com/watch?v=XP0aNfOb3n0
+[실행 화면](https://www.youtube.com/watch?v=XP0aNfOb3n0)
 
-<br>
+<img width="50%" src="https://github.com/oozeume/RIDI-SelectClone/assets/77391482/bbb55621-6596-457c-aa88-c678af74f9b0">   
 
+
+
+
+<br/>
+   
 ## 📱 4. 기능정보
 
 ### 1. 리디북스의 페이지네이션 구현
 
-<br>
-<img src="https://ifh.cc/g/LMHnGt.gif">
 
 - 클론할 리디북스와 99% 비슷한 페이지네이션을 구현했다.
 
@@ -133,8 +136,6 @@ useEffect(() => {
 
 ### 2. 별점 매기기
 
-<br/>
-<img src="https://ifh.cc/g/54aGeA.gif">
 
 - 별점을 클릭했을 때, 별점 값을 저장해서 댓글 api에 post요청을 보낸다.
 
